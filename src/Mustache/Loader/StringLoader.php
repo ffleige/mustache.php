@@ -25,6 +25,26 @@
  */
 class Mustache_Loader_StringLoader implements Mustache_Loader
 {
+
+    /**
+     * template name
+     * @var string
+     */
+    private $templateName;
+
+    /**
+     * template source
+     * @var string
+     */
+    private $template;
+
+    public function __construct($templateName, $template)
+    {
+        $this->templateName = $templateName;
+        $this->template = $template;
+    }
+
+
     /**
      * Load a Template by source.
      *
@@ -34,6 +54,9 @@ class Mustache_Loader_StringLoader implements Mustache_Loader
      */
     public function load($name)
     {
-        return $name;
+        if ($name !== $this->templateName) {
+            throw Mustache_Exception_UnknownTemplateException($name);
+        }
+        return $this->template;
     }
 }
